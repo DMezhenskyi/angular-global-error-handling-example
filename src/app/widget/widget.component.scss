@@ -1,0 +1,54 @@
+:host {
+  display: block;
+  position: relative;
+  padding: 15px 15px 25px 15px;
+  border-radius: 10px;
+  border: #CFD8DC 1px solid;
+  min-width: 300px;
+}
+.title {
+  margin-bottom: 10px;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.icon {
+  margin: 10px 0 0 0;
+  font-size: 34px;
+  width: 34px;
+  height: 34px;
+}
+.tasks {
+  padding: 0;
+  list-style: none;
+  width: 100%;
+}
+.task {
+  padding: 5px;
+  margin-bottom: 3px;
+  border-bottom: #CFD8DC 1px dotted;
+  text-transform: capitalize;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.add-new-task {
+  width: 100%;
+}
+.error {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+  z-index: 1;
+}
+.no-data {
+  color: #90A4AE;
+  text-align: center;
+  background-color: #fafafa;
+  padding: 20px 10px;
+}
