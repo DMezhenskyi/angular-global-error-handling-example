@@ -27,6 +27,7 @@ export class WidgetComponent implements OnInit {
   }
 
   addTask() {
+    // unreliable method
     this.widgetData.addTaskSync({ id: 0, title: 'New Task' });
   }
 }
