@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Task } from '../task.model';
 import { WidgetDataService } from './widget-data.service';
 import { WidgetErrorComponent } from './widget-error/widget-error.component';
@@ -23,11 +23,33 @@ export class WidgetComponent implements OnInit {
   constructor(private widgetData: WidgetDataService) { }
 
   ngOnInit(): void {
-    this.tasks$ = this.widgetData.load();
+    this.tasks$ = this.widgetData.load().pipe(
+      map(data => {
+        console.log('Data transformation...')
+        return data.map(data => data);
+      }),
+      tap({
+        error: (error) => {
+          this.error = error;
+          console.log(`Update component's 'error' property showing the error banner`);
+        }
+      }),
+      catchError(err => {
+        console.log(`Replacing the failed observable with an empty array`);
+        return of([]);
+      }),
+    );
   }
 
   addTask() {
     // unreliable method
-    this.widgetData.addTaskSync({ id: 0, title: 'New Task' });
+    try {
+      this.widgetData.addTaskSync({ id: 0, title: 'New Task' });
+    } catch (error) {
+      if (error instanceof Error) {
+        this.error = error;
+        throw error;
+      }
+    }
   }
 }
